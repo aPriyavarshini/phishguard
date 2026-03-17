@@ -7,7 +7,7 @@ export default function HistoryPage() {
 
   const load = async () => {
     const { data } = await api.get('/api/history')
-    setHistory(data)
+    setHistory(Array.isArray(data) ? data : [])
   }
 
   useEffect(() => {

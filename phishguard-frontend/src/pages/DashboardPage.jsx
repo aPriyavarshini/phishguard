@@ -7,24 +7,39 @@ import api from '../services/api'
 import StatCard from '../components/StatCard'
 
 const colors = ['#ff4d6d', '#1dff9e']
+const emptyAnalytics = {
+  total_scans: 0,
+  threats_detected: 0,
+  safe_urls: 0,
+  average_scan_time_ms: 0,
+  threat_trend: [],
+  category_breakdown: [],
+}
 
 export default function DashboardPage() {
-  const [analytics, setAnalytics] = useState({
-    total_scans: 0,
-    threats_detected: 0,
-    safe_urls: 0,
-    average_scan_time_ms: 0,
-    threat_trend: [],
-    category_breakdown: [],
-  })
+  const [analytics, setAnalytics] = useState(emptyAnalytics)
   const [alerts, setAlerts] = useState([])
 
   useEffect(() => {
     const fetchAnalytics = () => {
-      api.get('/api/analytics').then((res) => setAnalytics(res.data)).catch(() => {})
+      api
+        .get('/api/analytics')
+        .then((res) => {
+          const payload = res?.data && typeof res.data === 'object' ? res.data : {}
+          setAnalytics({
+            ...emptyAnalytics,
+            ...payload,
+            threat_trend: Array.isArray(payload.threat_trend) ? payload.threat_trend : [],
+            category_breakdown: Array.isArray(payload.category_breakdown) ? payload.category_breakdown : [],
+          })
+        })
+        .catch(() => setAnalytics(emptyAnalytics))
     }
     const fetchAlerts = () => {
-      api.get('/api/alerts').then((res) => setAlerts(res.data || [])).catch(() => {})
+      api
+        .get('/api/alerts')
+        .then((res) => setAlerts(Array.isArray(res.data) ? res.data : []))
+        .catch(() => setAlerts([]))
     }
     fetchAnalytics()
     fetchAlerts()
@@ -129,7 +144,7 @@ export default function DashboardPage() {
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
               <Pie data={analytics.category_breakdown} dataKey="value" nameKey="name" outerRadius={90}>
-                {analytics.category_breakdown.map((_, idx) => (
+                {(analytics.category_breakdown || []).map((_, idx) => (
                   <Cell key={idx} fill={colors[idx % colors.length]} />
                 ))}
               </Pie>

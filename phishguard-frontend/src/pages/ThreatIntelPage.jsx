@@ -6,7 +6,10 @@ export default function ThreatIntelPage() {
   const [threats, setThreats] = useState([])
 
   useEffect(() => {
-    api.get('/api/threats').then((res) => setThreats(res.data)).catch(() => {})
+    api
+      .get('/api/threats')
+      .then((res) => setThreats(Array.isArray(res.data) ? res.data : []))
+      .catch(() => setThreats([]))
   }, [])
 
   return (

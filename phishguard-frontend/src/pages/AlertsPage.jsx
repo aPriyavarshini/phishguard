@@ -6,7 +6,10 @@ export default function AlertsPage() {
   const [alerts, setAlerts] = useState([])
 
   useEffect(() => {
-    api.get('/api/alerts').then((res) => setAlerts(res.data)).catch(() => {})
+    api
+      .get('/api/alerts')
+      .then((res) => setAlerts(Array.isArray(res.data) ? res.data : []))
+      .catch(() => setAlerts([]))
   }, [])
 
   return (

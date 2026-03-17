@@ -47,7 +47,7 @@ export default function ScannerPage() {
           </div>
           <h4 className="mt-4 text-sm text-slate-300">AI Explanation</h4>
           <ul className="mt-2 list-disc pl-6 text-sm">
-            {result.explanation.map((item) => <li key={item}>{item}</li>)}
+            {(result.explanation || []).map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
       )}
