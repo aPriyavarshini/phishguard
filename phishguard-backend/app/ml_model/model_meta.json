@@ -1,0 +1,40 @@
+{
+  "model_name": "RandomForestClassifier",
+  "feature_names": [
+    "LongURL",
+    "SubDomains",
+    "Symbol@",
+    "UsingIP",
+    "HTTPS",
+    "PrefixSuffix-",
+    "Redirecting//",
+    "ShortURL",
+    "AbnormalURL"
+  ],
+  "metrics": {
+    "accuracy": 0.9050203527815468,
+    "precision": 0.8903553299492386,
+    "recall": 0.8958120531154239,
+    "f1": 0.8930753564154786
+  },
+  "all_results": {
+    "RandomForestClassifier": {
+      "accuracy": 0.9050203527815468,
+      "precision": 0.8903553299492386,
+      "recall": 0.8958120531154239,
+      "f1": 0.8930753564154786
+    },
+    "LogisticRegression": {
+      "accuracy": 0.8959746720940751,
+      "precision": 0.9075081610446137,
+      "recall": 0.8518896833503575,
+      "f1": 0.8788198103266597
+    },
+    "XGBoost": {
+      "accuracy": 0.9054726368159204,
+      "precision": 0.9095744680851063,
+      "recall": 0.8733401430030644,
+      "f1": 0.8910891089108911
+    }
+  }
+}
